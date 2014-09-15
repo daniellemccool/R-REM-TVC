@@ -1,0 +1,14 @@
+Package: REMThesis
+Title: My personal thesis package
+Version: 0.1
+Authors@R: "Danielle McCool <danielle.mccool@gmail.com> [aut, cre]"
+Description: My thesis workspace
+Depends:
+    R (>= 3.1.1),
+    tensor,
+    foreign,
+    abind,
+    xtable,
+    Hmisc
+License: What license is it under?
+LazyData: true
