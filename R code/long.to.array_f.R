@@ -37,24 +37,20 @@ makeCovariateArray <- function(data, ev.mat){
 }
 
 
-f <- function(x, b) {
-    exp(x%*%b)
-}
-
 
 rem.mtvc.lik <- function(b, ev.mat, x.arr) {
     b <- b
-    u.mat <- apply(x.arr, 2, f, b = b)
+    u.mat <- exp(tensor(x.arr, b, alongA = 3, alongB = 1))
     logl  <- sum(log(u.mat[ev.mat == 1])) -
              sum(u.mat[ev.mat != 3]) -
-#             sum(log(1 - exp(-1 * rowSums(u.mat))))
-             sum(log(1 - exp(-1 * Time*u.mat[,1])))
+             sum(log(1 - exp(-1 * rowSums(u.mat))))
+#             sum(log(1 - exp(-1 * Time*u.mat[,1])))
 
     return(-logl)
 }
 
 getNHat <- function(x.arr, b) {
-    u.mat <- apply(x.arr, 2, f, b = b)
+    u.mat <- exp(tensor(x.arr, b, alongA = 3, alongB = 1))
     p0      <- exp(-1 * ncol(u.mat)*u.mat[,1])
     pCap    <- 1-p0
     Nhat    <- sum(1/pCap)
